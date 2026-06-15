@@ -33,10 +33,10 @@ const Matabble1 = `
     )
 `;
 db.exec(Matabble1);
-const execution1 = db.prepare(`INSERT INTO users (name, role, password) VALUES (?, ?, ?)`);
-execution1.run('Mouna', 'Etudiante', 'ety13hTI');
-execution1.run('Keline', 'Push', 'JUTti134');
-execution1.run('Noura', 'Main', 'MLA12yge');
+const execution1 = db.prepare(`INSERT INTO users (name, role, email, password) VALUES (?, ?, ?, ?)`);
+execution1.run('Mouna', 'Etudiante', 'mouna@gmail.com', 'ety13hTI');
+execution1.run('Keline', 'Push','keline@gmail.com', 'JUTti134');
+execution1.run('Noura', 'Main','noura@gmail.com', 'MLA12yge');
 
 
 
