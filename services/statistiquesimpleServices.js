@@ -1,23 +1,3 @@
-// statistique simple
-
-
-
-// Identifier le meilleur étudiant (selon moyenne)
-function identifiestatistique(student_id, grades_id){
-    
-}
-
-// Calculer la moyenne générale
-function moyenneGeneral(grades_id){
-
-}
-
-// Compter les absences
-function compterStatistique(absence_id){
-
-}
-
-
 
 import db from "../db/data";
 
