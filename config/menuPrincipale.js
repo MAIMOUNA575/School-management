@@ -1,4 +1,5 @@
 import { question,close } from "../utils/interface.js";
+import { seConnecter, session } from "../config/Connexion.js"
 
 // Afficher le message de bienvenue
 const menuPrincipal = async () => {
@@ -19,9 +20,9 @@ const menuPrincipal = async () => {
             case "1": {
                 const connecte = await seConnecter();
                 if (connecte) {
-                    if (session.userConnecter.role === "admin")console.log('gestion admin a venir');
-                    else if (session.userConnecter.role === "teacher")console.log('gestion teacher a venir');
-                    else if (session.userConnecter.role === "student")console.log('gestion student a venir');
+                    if (session.connectionDelUtilisateur.role === "admin")console.log('gestion admin a venir');
+                    else if (session.connectionDelUtilisateur.role === "teacher")console.log('gestion teacher a venir');
+                    else if (session.connectionDelUtilisateur.role === "student")console.log('gestion student a venir');
                     else console.log("❌ Rôle inconnu.");
                 }
                 break;

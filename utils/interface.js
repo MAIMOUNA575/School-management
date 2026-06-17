@@ -2,7 +2,7 @@ import readline from 'readline';
 
 
 const inter = readline.createInterface({
-    input : precess.stdin,
+    input : process.stdin,
     output : process.stdout,
 });
 

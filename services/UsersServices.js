@@ -1,5 +1,5 @@
-import Users from "../models/Users.model";
-import db from "../db/data";
+import Users from "../models/Users.model.js";
+import db from "../db/data.js";
 
 // ajouter un utilisateur
 function addUser(name, role) {
