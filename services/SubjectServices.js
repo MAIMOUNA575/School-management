@@ -1,9 +1,9 @@
-import db from "../db/data";
+import db from "../db/data.js";
 
 // ajouter un sujet
 function addSubject(nom, teacher_id) {
     if (!nom || !teacher_id) {
-        console.error('Le nom et le professeur sont obligatoires.');
+        console.error("Le nom et l'id professeur sont obligatoires.");
         return false;
     }
 

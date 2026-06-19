@@ -1,9 +1,9 @@
-import Grades from "../models/GradesModel";
-import db from "../db/data";
+import Grades from "../models/GradesModel.js";
+import db from "../db/data.js";
 
 // ajouter une note (entre 0 et 20)
 function addGrades(student_id, subject_id, note) {
-    if (note < 0 || note > 20) {
+    if (note < 0 || note > 20) { 
         console.error('La note doit être comprise entre 0 et 20.');
         return false;
     }
@@ -15,7 +15,7 @@ function addGrades(student_id, subject_id, note) {
 
 // modifier une note
 function updateGrades(student_id, subject_id, note) {
-    if (note < 0 || note > 20) {
+    if (note < 0 || note > 20) {  
         console.error('La note doit être comprise entre 0 et 20.');
         return false;
     }
@@ -26,9 +26,9 @@ function updateGrades(student_id, subject_id, note) {
 }
 
 // supprimer une note
-function deleteGrades(student_id, subject_id) {
-    db.prepare(`DELETE FROM grades WHERE student_id = ? AND subject_id = ?`)
-        .run(student_id, subject_id);
+function deleteGrades(id) {
+    db.prepare(`DELETE FROM grades WHERE id = ?`)
+        .run(id);
 }
 
 // calculer la moyenne d'un étudiant

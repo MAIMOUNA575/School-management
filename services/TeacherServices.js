@@ -1,5 +1,5 @@
-import Teachers from "../models/TeachersModel";
-import db from "../db/data";
+import Teachers from "../models/TeachersModel.js";
+import db from "../db/data.js";
 
 // ajouter un professeur
 function addTeacher(name, matiere) {

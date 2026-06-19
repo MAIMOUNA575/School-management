@@ -2,9 +2,9 @@ import Users from "../models/Users.model.js";
 import db from "../db/data.js";
 
 // ajouter un utilisateur
-function addUser(name, role) {
-    if (!name || !role) {
-        console.error('Le nom et le rôle sont obligatoires.');
+function addUser(name, role, email, password) { 
+    if (!name || !role || !email || !password) { 
+        console.error("Le nom, le rôle, l'email et le mot de passe sont obligatoires.");
         return false;
     }
 
@@ -21,8 +21,8 @@ function addUser(name, role) {
         return false;
     }
 
-    db.prepare(`INSERT INTO users (name, role) VALUES (?, ?)`)
-        .run(name, role);
+    db.prepare(`INSERT INTO users (name, role, email, password) VALUES (?, ?, ?, ?)`)
+        .run(name, role, email, password);
     return true;
 }
 

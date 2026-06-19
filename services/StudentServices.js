@@ -1,5 +1,5 @@
-import Students from "../models/StudentsModel";
-import db from "../db/data";
+import Students from "../models/StudentsModel.js";
+import db from "../db/data.js";
 
 // ajouter un etudiant
 function addStudent(matricule, nom, prenom, age, classe) {

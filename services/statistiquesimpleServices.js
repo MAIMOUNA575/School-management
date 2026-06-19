@@ -1,5 +1,5 @@
-
-import db from "../db/data";
+import db from "../db/data.js";
+import Students from "../models/StudentsModel.js";
 
 // Identifier le meilleur étudiant (selon moyenne)
 function identifierMeilleurEtudiant() {
@@ -36,7 +36,6 @@ function identifierMeilleurEtudiant() {
     return meilleurEtudiant;
 }
 
-
 // Calculer la moyenne générale de tous les étudiants
 function moyenneGenerale() {
     const notes = db.prepare(`SELECT note FROM grades`).all();
@@ -49,7 +48,6 @@ function moyenneGenerale() {
     const somme = notes.reduce((acc, row) => acc + row.note, 0);
     return somme / notes.length;
 }
-
 
 // Calculer la moyenne d'un étudiant spécifique
 function moyenneEtudiant(student_id) {
@@ -76,8 +74,7 @@ function moyenneEtudiant(student_id) {
     return somme / notes.length;
 }
 
-
-// Compter les absences d'un étudiant
+// Compter les absences d'un étudiant (CORRIGÉ : Utilise 'status')
 function compterAbsences(student_id) {
     if (!student_id) {
         console.error('L\'identifiant de l\'étudiant est obligatoire.');
@@ -91,13 +88,16 @@ function compterAbsences(student_id) {
         return null;
     }
 
+    // Nombre total d'absences
     const total = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ?`)
         .get(student_id);
 
-    const justifiees = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ? AND justifiee = 1`)
+    // Absences justifiées (status = 1)
+    const justifiees = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ? AND status = 1`)
         .get(student_id);
 
-    const nonJustifiees = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ? AND justifiee = 0`)
+    // Absences non justifiées (status = 0)
+    const nonJustifiees = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ? AND status = 0`)
         .get(student_id);
 
     return {
@@ -106,7 +106,6 @@ function compterAbsences(student_id) {
         nonJustifiees: nonJustifiees.total
     };
 }
-
 
 // Statistiques complètes d'un étudiant
 function statistiquesEtudiant(student_id) {
@@ -132,4 +131,4 @@ function statistiquesEtudiant(student_id) {
     };
 }
 
-export {identifierMeilleurEtudiant, moyenneGenerale, moyenneEtudiant, compterAbsences, statistiquesEtudiant};
+export { identifierMeilleurEtudiant, moyenneGenerale, moyenneEtudiant, compterAbsences, statistiquesEtudiant };

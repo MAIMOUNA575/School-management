@@ -1,11 +1,9 @@
-import Grades from "../models/AbsencesModelsModel";
-import db from "../db/data";
+import db from "../db/data.js";
 
-
-// Enregistrer une absence
-function addAbsence(student_id, subject_id, date) {
-    if (!student_id || !subject_id || !date) {
-        console.error('L\'étudiant, la matière et la date sont obligatoires.');
+// Enregistrer une absence (0 = non justifiée, 1 = justifiée)
+function addAbsence(student_id, date, status = 0) {
+    if (!student_id || !date || (status !== 0 && status !== 1)) {
+        console.error('L\'étudiant, la date et un statut valide (0 ou 1) sont obligatoires.');
         return false;
     }
 
@@ -16,15 +14,8 @@ function addAbsence(student_id, subject_id, date) {
         return false;
     }
 
-    const subject = db.prepare(`SELECT * FROM subjects WHERE id = ?`)
-        .get(subject_id);
-    if (!subject) {
-        console.error('Aucune matière trouvée avec cet identifiant.');
-        return false;
-    }
-
-    db.prepare(`INSERT INTO absences (student_id, subject_id, date, status) VALUES (?, ?, ?, ?)`)
-        .run(student_id, subject_id, date, 0);
+    db.prepare(`INSERT INTO absences (student_id, date, status) VALUES (?, ?, ?)`)
+        .run(student_id, date, status);
     return true;
 }
 
@@ -46,8 +37,7 @@ function marquerAbsence(id, status) {
         console.error('Aucune absence trouvée avec cet identifiant.');
         return false;
     }
-
-    db.prepare(`UPDATE absences SET justifiee = ? WHERE id = ?`)
+    db.prepare(`UPDATE absences SET status = ? WHERE id = ?`)
         .run(status, id);
     return true;
 }
@@ -69,4 +59,5 @@ function consulerAbsences(student_id) {
     return db.prepare(`SELECT * FROM absences WHERE student_id = ?`)
         .all(student_id);
 }
-export { addAbsence, marquerAbsence, consulerAbsences};
+
+export { addAbsence, marquerAbsence, consulerAbsences };
