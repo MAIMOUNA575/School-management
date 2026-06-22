@@ -50,3 +50,5 @@ const GestionTeachers = async () => {
         }
     }
 }
+
+export {GestionTeachers};

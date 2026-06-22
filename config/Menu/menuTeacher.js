@@ -2,7 +2,7 @@ import { question, fermerInterface } from "../Interface.js";
 import { GestionSubjects } from "../Gestion/GestionSubjects.js";
 import { GestionGrades } from "../Gestion/GestionGrades.js";
 import { GestionAbsences } from "../Gestion/GestionAbsences.js";
-
+import { GestionTeachers } from "../Gestion/GestionTeacher.js"
 
 const afficherMenuTeacher = async () => {
 
