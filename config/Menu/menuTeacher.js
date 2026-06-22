@@ -4,6 +4,9 @@ import { GestionGrades } from "../Gestion/GestionGrades.js";
 import { GestionAbsences } from "../Gestion/GestionAbsences.js";
 import { GestionTeachers } from "../Gestion/GestionTeacher.js"
 
+
+let actif = true;
+
 const afficherMenuTeacher = async () => {
 
     while (actif) {

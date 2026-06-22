@@ -3,6 +3,7 @@ import { GestionGrades } from "../config/Gestion/GestionGrades.js";
 import { GestionAbsences } from "../config/Gestion/GestionAbsences.js";
 import { GestionStatistiques } from "../config/Gestion/GestionStatistiques.js";
 
+let actif = true;
 
 const afficherMenuStudent = async () => {
     
