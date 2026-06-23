@@ -1,6 +1,6 @@
 import db from "../db/data.js";
 
-// Enregistrer une absence (0 = non justifiée, 1 = justifiée)
+// ajouter une absence 
 function addAbsence(student_id, date, status = 0) {
     if (!student_id || !date || (status !== 0 && status !== 1)) {
         console.error('L\'étudiant, la date et un statut valide (0 ou 1) sont obligatoires.');

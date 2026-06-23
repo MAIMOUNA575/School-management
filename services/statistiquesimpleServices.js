@@ -1,7 +1,7 @@
 import db from "../db/data.js";
 import Students from "../models/StudentsModel.js";
 
-// Identifier le meilleur étudiant (selon moyenne)
+// Identifier le meilleur étudiant
 function identifierMeilleurEtudiant() {
     const students = db.prepare(`SELECT * FROM students`).all();
 
@@ -49,7 +49,7 @@ function moyenneGenerale() {
     return somme / notes.length;
 }
 
-// Calculer la moyenne d'un étudiant spécifique
+// Calculer la moyenne d'un étudiant 
 function moyenneEtudiant(student_id) {
     if (!student_id) {
         console.error('L\'identifiant de l\'étudiant est obligatoire.');
@@ -74,7 +74,7 @@ function moyenneEtudiant(student_id) {
     return somme / notes.length;
 }
 
-// Compter les absences d'un étudiant (CORRIGÉ : Utilise 'status')
+// Compter les absences d'un étudiant
 function compterAbsences(student_id) {
     if (!student_id) {
         console.error('L\'identifiant de l\'étudiant est obligatoire.');
@@ -88,15 +88,15 @@ function compterAbsences(student_id) {
         return null;
     }
 
-    // Nombre total d'absences
+
     const total = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ?`)
         .get(student_id);
 
-    // Absences justifiées (status = 1)
+
     const justifiees = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ? AND status = 1`)
         .get(student_id);
 
-    // Absences non justifiées (status = 0)
+
     const nonJustifiees = db.prepare(`SELECT COUNT(*) as total FROM absences WHERE student_id = ? AND status = 0`)
         .get(student_id);
 
