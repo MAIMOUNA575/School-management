@@ -1,5 +1,12 @@
 import { question,close } from "../utils/interface.js";
 import { seConnecter, session } from "../config/Connexion.js"
+import { afficherMenuAdmin } from "./Menu/menuAdmin.js";
+import { afficherMenuStudent } from "./Menu/menuStudent.js";
+import { afficherMenuTeacher } from "./Menu/menuTeacher.js";
+
+
+
+
 
 // Afficher le message de bienvenue
 const menuPrincipal = async () => {
@@ -20,9 +27,9 @@ const menuPrincipal = async () => {
             case "1": {
                 const connecte = await seConnecter();
                 if (connecte) {
-                    if (session.connectionDelUtilisateur.role === "admin")console.log('gestion admin a venir');
-                    else if (session.connectionDelUtilisateur.role === "teacher")console.log('gestion teacher a venir');
-                    else if (session.connectionDelUtilisateur.role === "student")console.log('gestion student a venir');
+                    if (session.connectionDelUtilisateur.role === "admin")  await afficherMenuAdmin();
+                    else if (session.connectionDelUtilisateur.role === "teacher") await afficherMenuTeacher();
+                    else if (session.connectionDelUtilisateur.role === "student") await afficherMenuStudent();
                     else console.log("❌ Rôle inconnu.");
                 }
                 break;
@@ -30,7 +37,7 @@ const menuPrincipal = async () => {
             case "0":
                 actif = false;
                 console.log("\nAu revoir ! 👋 Merci");
-                fermerInterface();
+                close();
                 break;
             default:
                 console.log("❌ Choix invalide.");

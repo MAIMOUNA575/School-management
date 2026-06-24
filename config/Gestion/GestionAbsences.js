@@ -3,7 +3,7 @@ import {addAbsence, marquerAbsence, consulerAbsences} from '../../services/absen
 
 
 
-const GestionAbsence = async()=>{
+const GestionAbsences = async()=>{
     let active = true;
     while(active){
         console.log("\n〚=== GESTION DES ABSENCES ===〛");
@@ -33,3 +33,4 @@ const GestionAbsence = async()=>{
         };
     };
 };
+export{GestionAbsences}

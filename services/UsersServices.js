@@ -8,16 +8,15 @@ function addUser(name, role, email, password) {
         return false;
     }
 
-    const rolesValides = ['admin', 'professeur', 'etudiant'];
+    const rolesValides = ['admin', 'teacher', 'student'];
     if (!rolesValides.includes(role)) {
-        console.error(`Le rôle doit être l'un des suivants : ${rolesValides.join(', ')}.`);
+        console.error(`Le rôle '${role}' est invalide. Il doit être l'un des suivants : ${rolesValides.join(', ')}.`);
         return false;
     }
 
-    const existing = db.prepare(`SELECT * FROM users WHERE name = ?`)
-        .get(name);
+    const existing = db.prepare(`SELECT * FROM users WHERE name = ?`).get(name);
     if (existing) {
-        console.error('Un utilisateur avec ce nom existe déjà.');
+        console.error(`Un utilisateur avec le nom '${name}' existe déjà.`);
         return false;
     }
 
@@ -39,8 +38,7 @@ function updateUser(id, name, role) {
         return false;
     }
 
-    const existing = db.prepare(`SELECT * FROM users WHERE id = ?`)
-        .get(id);
+    const existing = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
     if (!existing) {
         console.error('Aucun utilisateur trouvé avec cet identifiant.');
         return false;
@@ -58,15 +56,13 @@ function deleteUser(id) {
         return false;
     }
 
-    const existing = db.prepare(`SELECT * FROM users WHERE id = ?`)
-        .get(id);
+    const existing = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
     if (!existing) {
         console.error('Aucun utilisateur trouvé avec cet identifiant.');
         return false;
     }
 
-    db.prepare(`DELETE FROM users WHERE id = ?`)
-        .run(id);
+    db.prepare(`DELETE FROM users WHERE id = ?`).run(id);
     return true;
 }
 
@@ -77,8 +73,7 @@ function rechercheUser(id) {
         return null;
     }
 
-    const user = db.prepare(`SELECT * FROM users WHERE id = ?`)
-        .get(id);
+    const user = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
     if (!user) {
         console.error('Aucun utilisateur trouvé avec cet identifiant.');
         return null;

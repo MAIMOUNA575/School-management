@@ -1,34 +1,11 @@
 import db from "./data.js";
 
-const Matable2 = `
-    CREATE TABLE IF NOT EXISTS students (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        matricule TEXT NOT NULL UNIQUE,
-        nom TEXT NOT NULL,
-        prenom TEXT NOT NULL,
-        age INTEGER NOT NULL,
-        classe TEXT NOT NULL
-    )
-`;
-db.exec(Matable2);
-// const execution2 = db.prepare(`INSERT INTO students(matricule, nom, prenom, age, classe)VALUES (?, ?, ?, ?, ?)`);
-// execution2.run('15037', 'Campbell', 'docteur', 12, 'TleC');
-// execution2.run('49023', 'Coulibaly', 'Mouna', 16, 'TleA');
-// execution2.run('76553', 'Regis', 'Salomon', 11, 'Tle D');
-
-
-
-
-
-
-
-
 const Matabble1 = `
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         role TEXT NOT NULL,
-        email TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
     )
 `;
@@ -38,17 +15,32 @@ db.exec(Matabble1);
 // execution1.run('Keline', 'teacher','keline@gmail.com', 'JUTti134');
 // execution1.run('Noura', 'student','noura@gmail.com', 'MLA12yge');
 
+const Matable2 = `
+    CREATE TABLE IF NOT EXISTS students (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        matricule TEXT NOT NULL UNIQUE,
+        nom TEXT NOT NULL,
+        prenom TEXT NOT NULL,
+        age INTEGER NOT NULL,
+        classe TEXT NOT NULL,
+        users_id INTEGER NOT NULL,
+        FOREIGN KEY (users_id) REFERENCES users(id)
+    )
+`;
+db.exec(Matable2);
+// const execution2 = db.prepare(`INSERT INTO students(matricule, nom, prenom, age, classe)VALUES (?, ?, ?, ?, ?)`);
+// execution2.run('15037', 'Campbell', 'docteur', 12, 'TleC');
+// execution2.run('49023', 'Coulibaly', 'Mouna', 16, 'TleA');
+// execution2.run('76553', 'Regis', 'Salomon', 11, 'Tle D');
 
 
-
-
-
-
-const Matabble3 =`
+const Matabble3 = `
     CREATE TABLE IF NOT EXISTS teachers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        matiere TEXT NOT NULL
+        matiere TEXT NOT NULL,
+        users_id INTEGER NOT NULL,
+        FOREIGN KEY (users_id) REFERENCES users(id)
     )
 `;
 db.exec(Matabble3);
@@ -56,12 +48,6 @@ db.exec(Matabble3);
 // execution3.run('Regis', 'Maths');
 // execution3.run('Nan', 'FR');
 // execution3.run('Naza', 'ANG');
-
-
-
-
-
-
 
 const Matabble4 = `
     CREATE TABLE IF NOT EXISTS subjects(
@@ -76,10 +62,6 @@ db.exec(Matabble4);
 // execution4.run('Mouna', '1');
 // execution4.run('Moi', '2');
 // execution4.run('Nous', '3');
-
-
-
-
 
 
 const Matabble5 = `

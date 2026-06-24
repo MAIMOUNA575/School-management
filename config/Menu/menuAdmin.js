@@ -1,12 +1,11 @@
-import { question, fermerInterface } from "../utils/rl.js";
-import { GestionUsers } from "../config/Gestion/GestionUsers.js";
-import { GestionTeachers } from "../config/Gestion/GestionTeachers.js";
-import { GestionSubjects } from "../config/Gestion/GestionSubjects.js";
-import { GestionStudents } from "../config/Gestion/GestionStudents.js";
-import { GestionGrades } from "../config/Gestion/GestionGrades.js";
-import { GestionAbsences } from "../config/Gestion/GestionAbsences.js";
-import { Statistiques } from "../config/Gestion/Statistiques.js";
-import { gestionUsers } from "../config/Gestion/GestionUser.js";
+import { question, close } from "../../utils/interface.js";
+import { GestionTeacher } from "../Gestion/GestionTeacher.js";
+import { GestionSubject } from "../Gestion/GestionSubject.js";
+import { GestionStudent } from "../Gestion/GestionStudent.js";
+import { GestionGrade } from "../Gestion/GestionGrade.js";
+import { GestionAbsences } from "../Gestion/GestionAbsences.js";
+import { GestionStatistiquesimple } from "../Gestion/GestionStatistique.js";
+import { GestionUser } from "../Gestion/GestionUser.js";
 
 let actif = true;
 
@@ -29,23 +28,23 @@ const afficherMenuAdmin = async () => {
 
         switch (choix) {
             case "1": {
-                await gestionUsers();
+                await GestionUser();
                 break;
             }
             case "2": {
-                await GestionTeachers();
+                await GestionTeacher();
                 break;
             }
             case "3": {
-                await GestionSubjects();
+                await GestionSubject();
                 break;
             }
             case "4": {
-                await GestionStudents();
+                await GestionStudent();
                 break;
             }
             case "5": {
-                await GestionGrades();
+                await GestionGrade();
                 break;
             }
             case "6": {
@@ -53,7 +52,7 @@ const afficherMenuAdmin = async () => {
                 break;
             }
             case "7": {
-                await Statistiques();
+                await GestionStatistiquesimple();
                 break;
             }
             case "0":
@@ -64,3 +63,5 @@ const afficherMenuAdmin = async () => {
         }
     }
 }
+
+export {afficherMenuAdmin};

@@ -2,7 +2,7 @@ import {question} from '../../utils/interface.js';
 import { addSubject, listerSubjects, rechercheSubject, updateSubject, deleteSubject, affecteSubject, } from '../../services/SubjectServices.js';
 
 
-const GestionSubjects = async ()=>{
+const GestionSubject = async ()=>{
     let active = true;
     while(active){
         console.log("\n〚=== GESTION DES SUJET ===〛");
@@ -48,3 +48,4 @@ const GestionSubjects = async ()=>{
         };
     };
 };
+export{GestionSubject}

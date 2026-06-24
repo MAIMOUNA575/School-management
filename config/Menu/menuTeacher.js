@@ -1,8 +1,8 @@
-import { question, fermerInterface } from "../Interface.js";
-import { GestionSubjects } from "../Gestion/GestionSubjects.js";
-import { GestionGrades } from "../Gestion/GestionGrades.js";
+import { question, close } from "../../utils/interface.js";
+import { GestionSubject } from "../Gestion/GestionSubject.js";
+import { GestionGrade } from "../Gestion/GestionGrade.js";
 import { GestionAbsences } from "../Gestion/GestionAbsences.js";
-import { GestionTeachers } from "../Gestion/GestionTeacher.js"
+import { GestionTeacher } from "../Gestion/GestionTeacher.js"
 
 
 let actif = true;
@@ -40,3 +40,5 @@ const afficherMenuTeacher = async () => {
         }
     }
 }
+
+export {afficherMenuTeacher}

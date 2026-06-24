@@ -1,7 +1,7 @@
-import { question, fermerInterface } from "../utils/rl.js";
-import { GestionGrades } from "../config/Gestion/GestionGrades.js";
-import { GestionAbsences } from "../config/Gestion/GestionAbsences.js";
-import { GestionStatistiques } from "../config/Gestion/GestionStatistiques.js";
+import { question, close } from "../../utils/interface.js";
+import { GestionGrade } from "../Gestion/GestionGrade.js";
+import { GestionAbsences } from "../Gestion/GestionAbsences.js";
+import { GestionStatistiquesimple } from "../Gestion/GestionStatistique.js";
 
 let actif = true;
 
@@ -43,3 +43,5 @@ const afficherMenuStudent = async () => {
         }
     }
 }
+
+export {afficherMenuStudent}

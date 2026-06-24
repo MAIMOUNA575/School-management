@@ -1,9 +1,10 @@
+// StudentsServices.js
 import Students from "../models/StudentsModel.js";
 import db from "../db/data.js";
 
-// ajouter un etudiant
-function addStudent(matricule, nom, prenom, age, classe) {
-    if (!matricule || !nom || !prenom || !age || !classe) {
+// ajouter un étudiant
+function addStudent(matricule, nom, prenom, age, classe, users_id) {
+    if (!matricule || !nom || !prenom || !age || !classe || !users_id) {
         console.error('Tous les champs sont obligatoires.');
         return false;
     }
@@ -20,30 +21,26 @@ function addStudent(matricule, nom, prenom, age, classe) {
         return false;
     }
 
-    db.prepare(`INSERT INTO students (matricule, nom, prenom, age, classe) VALUES (?, ?, ?, ?, ?)`)
-        .run(matricule, nom, prenom, age, classe);
-    return true;
+    const student = new Students(matricule, nom, prenom, age, classe, users_id);
+
+    const result = db.prepare(`INSERT INTO students (matricule, nom, prenom, age, classe, users_id) VALUES (?, ?, ?, ?, ?, ?)`)
+        .run(student.matricule, student.nom, student.prenom, student.age, student.classe, student.users_id);
+
+    return result.lastInsertRowid;
 }
 
-// modifier un etudiant
-function updateStudent(matricule, nom, prenom, age, classe) {
-    if (!matricule || !nom || !prenom || !age || !classe) {
+// modifier un étudiant
+function updateStudent(matricule, nom, prenom, age, classe, users_id) {
+    if (!matricule || !nom || !prenom || !age || !classe || !users_id) {
         console.error('Tous les champs sont obligatoires.');
         return false;
     }
 
     if (age < 0 || age > 100) {
-        console.error('L\'âge doit être compris entre 0 et 100.');
+        console.error("L'âge doit être compris entre 0 et 100.");
         return false;
     }
 
-    db.prepare(`UPDATE students SET nom = ?, prenom = ?, age = ?, classe = ? WHERE matricule = ?`)
-        .run(nom, prenom, age, classe, matricule);
-    return true;
-}
-
-// supprimer un etudiant
-function deleteStudent(matricule) {
     const existing = db.prepare(`SELECT * FROM students WHERE matricule = ?`)
         .get(matricule);
     if (!existing) {
@@ -51,25 +48,53 @@ function deleteStudent(matricule) {
         return false;
     }
 
-    db.prepare(`DELETE FROM students WHERE matricule = ?`)
-        .run(matricule);
-    return true;
+    const student = new Students(matricule, nom, prenom, age, classe, users_id);
+
+    const result = db.prepare(`UPDATE students SET nom = ?, prenom = ?, age = ?, classe = ?, users_id = ? WHERE matricule = ?`)
+        .run(student.nom, student.prenom, student.age, student.classe, student.users_id, student.matricule);
+
+    return result.changes > 0;
 }
 
-// rechercher un etudiant
-function rechercheStudent(matricule) {
-    const student = db.prepare(`SELECT * FROM students WHERE matricule = ?`)
+// supprimer un étudiant
+function deleteStudent(matricule) {
+    if (!matricule) {
+        console.error('Le matricule est obligatoire.');
+        return false;
+    }
+
+    const existing = db.prepare(`SELECT * FROM students WHERE matricule = ?`)
         .get(matricule);
-    if (!student) {
+    if (!existing) {
+        console.error('Aucun étudiant trouvé avec ce matricule.');
+        return false;
+    }
+
+    const result = db.prepare(`DELETE FROM students WHERE matricule = ?`)
+        .run(matricule);
+    return result.changes > 0;
+}
+
+// rechercher un étudiant
+function rechercheStudent(matricule) {
+    if (!matricule) {
+        console.error('Le matricule est obligatoire.');
+        return null;
+    }
+
+    const row = db.prepare(`SELECT * FROM students WHERE matricule = ?`)
+        .get(matricule);
+    if (!row) {
         console.error('Aucun étudiant trouvé avec ce matricule.');
         return null;
     }
-    return student;
+    return new Students(row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id);
 }
 
-// lister tous les etudiants
+// lister tous les étudiants
 function listerStudents() {
-    return db.prepare(`SELECT * FROM students`).all();
+    const rows = db.prepare(`SELECT * FROM students`).all();
+    return rows.map(row => new Students(row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id));
 }
 
 export { addStudent, updateStudent, deleteStudent, rechercheStudent, listerStudents };

@@ -2,9 +2,9 @@ import Teachers from "../models/TeachersModel.js";
 import db from "../db/data.js";
 
 // ajouter un professeur
-function addTeacher(name, matiere) {
-    if (!name || !matiere) {
-        console.error('Le nom et la matière sont obligatoires.');
+function addTeacher(name, matiere, users_id) {
+    if (!name || !matiere || !users_id) {
+        console.error('Le nom, la matière et l\'identifiant utilisateur sont obligatoires.');
         return false;
     }
 
@@ -15,15 +15,20 @@ function addTeacher(name, matiere) {
         return false;
     }
 
-    db.prepare(`INSERT INTO teachers (name, matiere) VALUES (?, ?)`)
-        .run(name, matiere);
-    return true;
+    // On garde l'instance du modèle au cas où elle soit utilisée ailleurs
+    const teacher = new Teachers(name, matiere, users_id);
+
+    // 🔄 CORRECTION : On passe directement les arguments validés à la base de données
+    const result = db.prepare(`INSERT INTO teachers (name, matiere, users_id) VALUES (?, ?, ?)`)
+        .run(name, matiere, users_id);
+
+    return result.lastInsertRowid;
 }
 
 // modifier un professeur
-function updateTeacher(id, name, matiere) {
-    if (!id || !name || !matiere) {
-        console.error('L\'identifiant, le nom et la matière sont obligatoires.');
+function updateTeacher(id, name, matiere, users_id) {
+    if (!id || !name || !matiere || !users_id) {
+        console.error('L\'identifiant, le nom, la matière et l\'identifiant utilisateur sont obligatoires.');
         return false;
     }
 
@@ -34,15 +39,19 @@ function updateTeacher(id, name, matiere) {
         return false;
     }
 
-    db.prepare(`UPDATE teachers SET name = ?, matiere = ? WHERE id = ?`)
-        .run(name, matiere, id);
-    return true;
+    const teacher = new Teachers(name, matiere, users_id);
+
+    // 🔄 CORRECTION : Idem ici, on utilise directement les paramètres de la fonction
+    const result = db.prepare(`UPDATE teachers SET name = ?, matiere = ?, users_id = ? WHERE id = ?`)
+        .run(name, matiere, users_id, id);
+
+    return result.changes > 0;
 }
 
 // supprimer un professeur
 function deleteTeacher(id) {
     if (!id) {
-        console.error('L\'identifiant est obligatoire.');
+        console.error('L\'identifiant is obligatoire.');
         return false;
     }
 
@@ -53,30 +62,33 @@ function deleteTeacher(id) {
         return false;
     }
 
-    db.prepare(`DELETE FROM teachers WHERE id = ?`)
+    const result = db.prepare(`DELETE FROM teachers WHERE id = ?`)
         .run(id);
-    return true;
+
+    return result.changes > 0;
 }
 
-// rechercher un professeur
+// rechercher un professeur par id
 function rechercheTeacher(id) {
     if (!id) {
         console.error('L\'identifiant est obligatoire.');
         return null;
     }
 
-    const teacher = db.prepare(`SELECT * FROM teachers WHERE id = ?`)
+    const row = db.prepare(`SELECT * FROM teachers WHERE id = ?`)
         .get(id);
-    if (!teacher) {
+    if (!row) {
         console.error('Aucun professeur trouvé avec cet identifiant.');
         return null;
     }
-    return teacher;
+
+    return new Teachers(row.name, row.matiere, row.users_id);
 }
 
 // lister tous les professeurs
 function listerTeachers() {
-    return db.prepare(`SELECT * FROM teachers`).all();
+    const rows = db.prepare(`SELECT * FROM teachers`).all();
+    return rows.map(row => new Teachers(row.name, row.matiere, row.users_id));
 }
 
 export { addTeacher, updateTeacher, deleteTeacher, rechercheTeacher, listerTeachers };

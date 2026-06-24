@@ -3,7 +3,7 @@ import {addGrades, updateGrades, deleteGrades, calculeGrade} from '../../service
 
 
 
-const GestionGrades = async()=>{
+const GestionGrade = async()=>{
 
     const active= true;
 
@@ -42,3 +42,4 @@ const GestionGrades = async()=>{
         }
     }
 }
+export{GestionGrade}

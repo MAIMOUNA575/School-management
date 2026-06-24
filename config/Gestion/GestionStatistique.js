@@ -39,3 +39,4 @@ const GestionStatistiquesimple = async()=>{
         }
     }
 }
+export{GestionStatistiquesimple}
