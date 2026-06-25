@@ -1,69 +1,110 @@
 import Users from "../models/Users.model.js";
 import db from "../db/data.js";
+import { log } from "../utils/logger.js"; // 🔄 Import de ton logger (ajuste le chemin si nécessaire)
 
 // ajouter un utilisateur
 function addUser(name, role, email, password) { 
     if (!name || !role || !email || !password) { 
-        console.error("Le nom, le rôle, l'email et le mot de passe sont obligatoires.");
+        const msgErr = "Échec ajout utilisateur : Le nom, le rôle, l'email et le mot de passe sont obligatoires.";
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
     const rolesValides = ['admin', 'teacher', 'student'];
     if (!rolesValides.includes(role)) {
-        console.error(`Le rôle '${role}' est invalide. Il doit être l'un des suivants : ${rolesValides.join(', ')}.`);
+        const msgErr = `Échec ajout utilisateur : Le rôle '${role}' est invalide.`;
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
     const existing = db.prepare(`SELECT * FROM users WHERE name = ?`).get(name);
     if (existing) {
-        console.error(`Un utilisateur avec le nom '${name}' existe déjà.`);
+        const msgErr = `Échec ajout utilisateur : Un utilisateur avec le nom '${name}' existe déjà.`;
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
-    db.prepare(`INSERT INTO users (name, role, email, password) VALUES (?, ?, ?, ?)`)
-        .run(name, role, email, password);
-    return true;
+    try {
+        db.prepare(`INSERT INTO users (name, role, email, password) VALUES (?, ?, ?, ?)`)
+            .run(name, role, email, password);
+        
+        // 📝 Log de succès
+        log(`Utilisateur ajouté avec succès - Nom: ${name}, Rôle: ${role}`, "INFO");
+        return true;
+    } catch (error) {
+        log(`Erreur base de données lors de l'ajout de l'utilisateur '${name}' : ${error.message}`, "ERROR");
+        return false;
+    }
 }
 
 // modifier un utilisateur
 function updateUser(id, name, role) {
     if (!id || !name || !role) {
-        console.error('L\'identifiant, le nom et le rôle sont obligatoires.');
+        const msgErr = "Échec modification : L'identifiant, le nom et le rôle sont obligatoires.";
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
-    const rolesValides = ['admin', 'professeur', 'etudiant'];
+    const rolesValides = ['admin', 'teacher', 'student'];
     if (!rolesValides.includes(role)) {
-        console.error(`Le rôle doit être l'un des suivants : ${rolesValides.join(', ')}.`);
+        const msgErr = `Échec modification : Le rôle '${role}' est invalide.`;
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
     const existing = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
     if (!existing) {
-        console.error('Aucun utilisateur trouvé avec cet identifiant.');
+        const msgErr = `Échec modification : Aucun utilisateur trouvé avec l'identifiant ${id}.`;
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
-    db.prepare(`UPDATE users SET name = ?, role = ? WHERE id = ?`)
-        .run(name, role, id);
-    return true;
+    try {
+        db.prepare(`UPDATE users SET name = ?, role = ? WHERE id = ?`)
+            .run(name, role, id);
+        
+        // 📝 Log de succès
+        log(`Utilisateur ID ${id} modifié avec succès - Nouveau nom: ${name}, Nouveau rôle: ${role}`, "INFO");
+        return true;
+    } catch (error) {
+        log(`Erreur base de données lors de la modification de l'utilisateur ID ${id} : ${error.message}`, "ERROR");
+        return false;
+    }
 }
 
 // supprimer un utilisateur
 function deleteUser(id) {
     if (!id) {
-        console.error('L\'identifiant est obligatoire.');
+        const msgErr = "Échec suppression : L'identifiant est obligatoire.";
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
     const existing = db.prepare(`SELECT * FROM users WHERE id = ?`).get(id);
     if (!existing) {
-        console.error('Aucun utilisateur trouvé avec cet identifiant.');
+        const msgErr = `Échec suppression : Aucun utilisateur trouvé avec l'identifiant ${id}.`;
+        console.error(msgErr);
+        log(msgErr, "WARNING");
         return false;
     }
 
-    db.prepare(`DELETE FROM users WHERE id = ?`).run(id);
-    return true;
+    try {
+        db.prepare(`DELETE FROM users WHERE id = ?`).run(id);
+        
+        // 📝 Log de succès
+        log(`Utilisateur ID ${id} (Nom: ${existing.name}) supprimé avec succès`, "INFO");
+        return true;
+    } catch (error) {
+        log(`Erreur base de données lors de la suppression de l'utilisateur ID ${id} : ${error.message}`, "ERROR");
+        return false;
+    }
 }
 
 // rechercher un utilisateur par id
@@ -78,11 +119,15 @@ function rechercheUser(id) {
         console.error('Aucun utilisateur trouvé avec cet identifiant.');
         return null;
     }
+    
+    // 📝 Log de recherche (optionnel mais utile pour le suivi)
+    log(`Recherche effectuée pour l'utilisateur ID ${id}`, "INFO");
     return user;
 }
 
 // lister tous les utilisateurs
 function listerUsers() {
+    log("Consultation de la liste complète des utilisateurs", "INFO");
     return db.prepare(`SELECT * FROM users`).all();
 }
 

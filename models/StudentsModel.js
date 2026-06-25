@@ -1,4 +1,4 @@
-// StudentsModel.js
+
 class Students {
     constructor(matricule, nom, prenom, age, classe, users_id = null) {
         this.matricule = matricule;

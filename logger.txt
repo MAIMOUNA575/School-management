@@ -1,0 +1,7 @@
+2026-06-25 15:17:33 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-25 15:18:30 [INFO] Utilisateur ajouté avec succès - Nom: Coulibaly, Rôle: admin
+2026-06-25 15:19:29 [INFO] Utilisateur ajouté avec succès - Nom: sarah, Rôle: student
+2026-06-25 15:21:15 [WARNING] Échec modification : Le rôle 'T' est invalide.
+2026-06-25 15:21:50 [INFO] Utilisateur ID 6 modifié avec succès - Nouveau nom: raissa, Nouveau rôle: teacher
+2026-06-25 15:22:12 [INFO] Recherche effectuée pour l'utilisateur ID 6
+2026-06-25 15:22:24 [INFO] Consultation de la liste complète des utilisateurs

@@ -1,8 +1,10 @@
+// absencesServives.js
 import db from "../db/data.js";
 
-// ajouter une absence 
 function addAbsence(student_id, date, status = 0) {
-    if (!student_id || !date || (status !== 0 && status !== 1)) {
+    const statusNum = Number(status);
+
+    if (!student_id || !date || (statusNum !== 0 && statusNum !== 1)) {
         console.error('L\'étudiant, la date et un statut valide (0 ou 1) sont obligatoires.');
         return false;
     }
@@ -14,20 +16,17 @@ function addAbsence(student_id, date, status = 0) {
         return false;
     }
 
-    db.prepare(`INSERT INTO absences (student_id, date, status) VALUES (?, ?, ?)`)
-        .run(student_id, date, status);
-    return true;
+    const result = db.prepare(`INSERT INTO absences (student_id, date, status) VALUES (?, ?, ?)`)
+        .run(student_id, date, statusNum);
+
+    return result.lastInsertRowid;
 }
 
-// Marquer une absence comme justifiée ou non justifiée
 function marquerAbsence(id, status) {
-    if (!id || status === undefined) {
-        console.error('L\'identifiant et le statut sont obligatoires.');
-        return false;
-    }
+    const statusNum = Number(status);
 
-    if (status !== 0 && status !== 1) {
-        console.error('Le statut doit être 0 (non justifiée) ou 1 (justifiée).');
+    if (!id || status === undefined || (statusNum !== 0 && statusNum !== 1)) {
+        console.error('L\'identifiant et un statut valide (0 ou 1) sont obligatoires.');
         return false;
     }
 
@@ -37,12 +36,13 @@ function marquerAbsence(id, status) {
         console.error('Aucune absence trouvée avec cet identifiant.');
         return false;
     }
-    db.prepare(`UPDATE absences SET status = ? WHERE id = ?`)
-        .run(status, id);
-    return true;
+
+    const result = db.prepare(`UPDATE absences SET status = ? WHERE id = ?`)
+        .run(statusNum, id);
+
+    return result.changes > 0;
 }
 
-// Consulter l'historique des absences d'un étudiant
 function consulerAbsences(student_id) {
     if (!student_id) {
         console.error('L\'identifiant de l\'étudiant est obligatoire.');

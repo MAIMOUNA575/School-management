@@ -24,7 +24,7 @@ const GestionTeacher = async () => {
                 break;
             }
             case '2': {
-                const id = await question('ID du professeur à modifier : ');
+                const id = await question('ID du teacher à modifier : ');
                 const name = await question("Nouveau nom : ");
                 const matiere = await question("Nouvelle matière : ");
                 const users_id = await question("Nouvel ID utilisateur associé : ");
@@ -32,12 +32,12 @@ const GestionTeacher = async () => {
                 break;
             }
             case '3': {
-                const id = await question('ID du professeur à supprimer : ');
+                const id = await question('ID du teacher à supprimer : ');
                 deleteTeacher(Number(id));
                 break;
             }
             case '4': {
-                const id = await question('ID du professeur à rechercher : ');
+                const id = await question('ID du teacher à rechercher : ');
                 const teacher = rechercheTeacher(Number(id));
                 console.table(teacher);
                 break;

@@ -7,10 +7,8 @@ import { GestionAbsences } from "../Gestion/GestionAbsences.js";
 import { GestionStatistiquesimple } from "../Gestion/GestionStatistique.js";
 import { GestionUser } from "../Gestion/GestionUser.js";
 
-let actif = true;
-
-
 const afficherMenuAdmin = async () => {
+    let actif = true; // ← déplacé à l'intérieur, se réinitialise à chaque appel
 
     while (actif) {
         console.log("\n〚=== MENU ADMINISTRATEUR ===〛");
@@ -23,45 +21,25 @@ const afficherMenuAdmin = async () => {
         console.log("7. Statistiques");
         console.log("0. Quitter");
 
-
         const choix = await question("Choix : ");
 
         switch (choix) {
-            case "1": {
-                await GestionUser();
-                break;
-            }
-            case "2": {
-                await GestionTeacher();
-                break;
-            }
-            case "3": {
-                await GestionSubject();
-                break;
-            }
-            case "4": {
-                await GestionStudent();
-                break;
-            }
-            case "5": {
-                await GestionGrade();
-                break;
-            }
-            case "6": {
-                await GestionAbsences();
-                break;
-            }
-            case "7": {
-                await GestionStatistiquesimple();
-                break;
-            }
+            case "1": await GestionUser(); break;
+            case "2": await GestionTeacher(); break;
+            case "3": await GestionSubject(); break;
+            case "4": await GestionStudent(); break;
+            case "5": await GestionGrade(); break;
+            case "6": await GestionAbsences(); break;
+            case "7": await GestionStatistiquesimple(); break;
             case "0":
                 actif = false;
                 console.log("\nAu revoir ! 👋 Merci");
-                fermerInterface();
+                close();
                 break;
+            default:
+                console.log("❌ Choix invalide.");
         }
     }
-}
+};
 
-export {afficherMenuAdmin};
+export { afficherMenuAdmin };
