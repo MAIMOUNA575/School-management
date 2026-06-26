@@ -6,9 +6,6 @@ import { afficherMenuTeacher } from "./Menu/menuTeacher.js";
 
 
 
-
-
-// Afficher le message de bienvenue
 const menuPrincipal = async () => {
     console.log("╔════════════════════════════════════════╗");
     console.log("║   BIENVENU SUR VOTRE APPLICATION       ║");

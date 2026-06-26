@@ -1,6 +1,9 @@
 import Grades from "../models/GradesModel.js";
 import db from "../db/data.js";
 
+
+
+
 // ajouter une note (entre 0 et 20)
 function addGrades(student_id, subject_id, note) {
     if (note < 0 || note > 20) { 
@@ -12,6 +15,9 @@ function addGrades(student_id, subject_id, note) {
         .run(student_id, subject_id, note);
     return true;
 }
+
+
+
 
 // modifier une note
 function updateGrades(student_id, subject_id, note) {
@@ -25,11 +31,17 @@ function updateGrades(student_id, subject_id, note) {
     return true;
 }
 
+
+
+
 // supprimer une note
 function deleteGrades(id) {
     db.prepare(`DELETE FROM grades WHERE id = ?`)
         .run(id);
 }
+
+
+
 
 // calculer la moyenne d'un étudiant
 function calculeGrade(student_id) {
@@ -42,4 +54,18 @@ function calculeGrade(student_id) {
     return sum / rows.length;
 }
 
-export { addGrades, updateGrades, deleteGrades, calculeGrade };
+
+
+
+// lister les notes des etudiants
+function listerNotesEtudiant(student_id) {
+    if (!student_id) {
+        console.error('L\'identifiant de l\'étudiant est obligatoire.');
+        return [];
+    }
+
+    return db.prepare(`SELECT grades.id, subjects.nom AS matiere, grades.note FROM grades JOIN subjects ON grades.subject_id = subjects.id WHERE grades.student_id = ? `)
+    .all(student_id);
+}
+
+export { addGrades, updateGrades, deleteGrades, calculeGrade, listerNotesEtudiant };

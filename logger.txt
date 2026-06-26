@@ -5,3 +5,10 @@
 2026-06-25 15:21:50 [INFO] Utilisateur ID 6 modifié avec succès - Nouveau nom: raissa, Nouveau rôle: teacher
 2026-06-25 15:22:12 [INFO] Recherche effectuée pour l'utilisateur ID 6
 2026-06-25 15:22:24 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 14:13:35 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 14:24:26 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 14:29:02 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 14:52:35 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 14:54:12 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 14:58:17 [INFO] Consultation de la liste complète des utilisateurs
+2026-06-26 15:01:23 [INFO] Consultation de la liste complète des utilisateurs

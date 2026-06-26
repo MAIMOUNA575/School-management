@@ -18,7 +18,6 @@ const GestionStatistiquesimple = async()=>{
         const choix = await question ("choix : ");
         switch (choix){
             case '1':{
-                
                 await identifierMeilleurEtudiant();
                 break;
             }

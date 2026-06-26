@@ -1,5 +1,8 @@
 import db from "../db/data.js";
 
+
+
+
 // ajouter un sujet
 function addSubject(nom, teacher_id) {
     if (!nom || !teacher_id) {
@@ -26,10 +29,17 @@ function addSubject(nom, teacher_id) {
     return true;
 }
 
+
+
+
 // lister tous les sujets
 function listerSubjects() {
     return db.prepare(`SELECT * FROM subjects`).all();
 }
+
+
+
+
 
 // rechercher un sujet par id
 function rechercheSubject(id) {
@@ -46,6 +56,8 @@ function rechercheSubject(id) {
     }
     return subject;
 }
+
+
 
 // modifier un sujet
 function updateSubject(id, nom) {
@@ -66,6 +78,9 @@ function updateSubject(id, nom) {
     return true;
 }
 
+
+
+
 // supprimer un sujet
 function deleteSubject(id) {
     if (!id) {
@@ -84,6 +99,9 @@ function deleteSubject(id) {
         .run(id);
     return true;
 }
+
+
+
 
 // affecter un professeur a une matiere
 function affecteSubject(id, teacher_id) {
@@ -110,5 +128,7 @@ function affecteSubject(id, teacher_id) {
         .run(teacher_id, id);
     return true;
 }
+
+
 
 export { addSubject, listerSubjects, rechercheSubject, updateSubject, deleteSubject, affecteSubject };

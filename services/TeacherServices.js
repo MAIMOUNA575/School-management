@@ -1,6 +1,9 @@
 import Teachers from "../models/TeachersModel.js";
 import db from "../db/data.js";
 
+
+
+
 // ajouter un professeur
 function addTeacher(name, matiere, users_id) {
     if (!name || !matiere || !users_id) {
@@ -14,16 +17,15 @@ function addTeacher(name, matiere, users_id) {
         console.error('Un professeur avec ce nom existe déjà.');
         return false;
     }
-
-    // On garde l'instance du modèle au cas où elle soit utilisée ailleurs
     const teacher = new Teachers(name, matiere, users_id);
 
-    // 🔄 CORRECTION : On passe directement les arguments validés à la base de données
     const result = db.prepare(`INSERT INTO teachers (name, matiere, users_id) VALUES (?, ?, ?)`)
         .run(name, matiere, users_id);
 
     return result.lastInsertRowid;
 }
+
+
 
 // modifier un professeur
 function updateTeacher(id, name, matiere, users_id) {
@@ -41,12 +43,13 @@ function updateTeacher(id, name, matiere, users_id) {
 
     const teacher = new Teachers(name, matiere, users_id);
 
-    // 🔄 CORRECTION : Idem ici, on utilise directement les paramètres de la fonction
     const result = db.prepare(`UPDATE teachers SET name = ?, matiere = ?, users_id = ? WHERE id = ?`)
         .run(name, matiere, users_id, id);
 
     return result.changes > 0;
 }
+
+
 
 // supprimer un professeur
 function deleteTeacher(id) {
@@ -68,6 +71,8 @@ function deleteTeacher(id) {
     return result.changes > 0;
 }
 
+
+
 // rechercher un professeur par id
 function rechercheTeacher(id) {
     if (!id) {
@@ -85,10 +90,15 @@ function rechercheTeacher(id) {
     return new Teachers(row.name, row.matiere, row.users_id);
 }
 
+
+
+
 // lister tous les professeurs
 function listerTeachers() {
     const rows = db.prepare(`SELECT * FROM teachers`).all();
     return rows.map(row => new Teachers(row.name, row.matiere, row.users_id));
 }
+
+
 
 export { addTeacher, updateTeacher, deleteTeacher, rechercheTeacher, listerTeachers };

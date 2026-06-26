@@ -1,5 +1,3 @@
-
-
 class Teachers {
     constructor(nom, matiere,users_id=null){
         this.nom=nom;

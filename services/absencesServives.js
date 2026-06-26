@@ -1,6 +1,8 @@
-// absencesServives.js
 import db from "../db/data.js";
 
+
+
+// Ajouter un etudiant 
 function addAbsence(student_id, date, status = 0) {
     const statusNum = Number(status);
 
@@ -22,6 +24,10 @@ function addAbsence(student_id, date, status = 0) {
     return result.lastInsertRowid;
 }
 
+
+
+
+// Marquer une absence
 function marquerAbsence(id, status) {
     const statusNum = Number(status);
 
@@ -43,6 +49,9 @@ function marquerAbsence(id, status) {
     return result.changes > 0;
 }
 
+
+
+// consulter les absences
 function consulerAbsences(student_id) {
     if (!student_id) {
         console.error('L\'identifiant de l\'étudiant est obligatoire.');

@@ -1,6 +1,6 @@
-
 class Students {
-    constructor(matricule, nom, prenom, age, classe, users_id = null) {
+    constructor(id, matricule, nom, prenom, age, classe, users_id = null) {
+        this.id = id;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;

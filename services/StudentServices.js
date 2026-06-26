@@ -1,6 +1,8 @@
-// StudentsServices.js
 import Students from "../models/StudentsModel.js";
 import db from "../db/data.js";
+
+
+
 
 // ajouter un étudiant
 function addStudent(matricule, nom, prenom, age, classe, users_id) {
@@ -21,13 +23,15 @@ function addStudent(matricule, nom, prenom, age, classe, users_id) {
         return false;
     }
 
-    const student = new Students(matricule, nom, prenom, age, classe, users_id);
+    const student = new Students(null, matricule, nom, prenom, age, classe, users_id);
 
     const result = db.prepare(`INSERT INTO students (matricule, nom, prenom, age, classe, users_id) VALUES (?, ?, ?, ?, ?, ?)`)
         .run(student.matricule, student.nom, student.prenom, student.age, student.classe, student.users_id);
-
     return result.lastInsertRowid;
+
 }
+
+
 
 // modifier un étudiant
 function updateStudent(matricule, nom, prenom, age, classe, users_id) {
@@ -48,13 +52,15 @@ function updateStudent(matricule, nom, prenom, age, classe, users_id) {
         return false;
     }
 
-    const student = new Students(matricule, nom, prenom, age, classe, users_id);
+    const student = new Students(existing.id, nom, prenom, age, classe, users_id);
+
 
     const result = db.prepare(`UPDATE students SET nom = ?, prenom = ?, age = ?, classe = ?, users_id = ? WHERE matricule = ?`)
         .run(student.nom, student.prenom, student.age, student.classe, student.users_id, student.matricule);
 
     return result.changes > 0;
 }
+
 
 // supprimer un étudiant
 function deleteStudent(matricule) {
@@ -88,13 +94,39 @@ function rechercheStudent(matricule) {
         console.error('Aucun étudiant trouvé avec ce matricule.');
         return null;
     }
-    return new Students(row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id);
+
+    return new Students(row.id, row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id);
+
 }
+
+
 
 // lister tous les étudiants
 function listerStudents() {
     const rows = db.prepare(`SELECT * FROM students`).all();
-    return rows.map(row => new Students(row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id));
+    return rows.map(row => new Students(row.id, row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id));
+
 }
 
-export { addStudent, updateStudent, deleteStudent, rechercheStudent, listerStudents };
+
+
+// Recherchre un etudiant a partir de l'id de l'utilisateur
+function rechercheStudentByUserId(users_id) {
+    if (!users_id) {
+        console.error('L\'identifiant utilisateur est obligatoire.');
+        return null;
+    }
+
+    const row = db.prepare(`SELECT * FROM students WHERE users_id = ?`).get(users_id);
+    if (!row) {
+        console.error('Aucun dossier étudiant trouvé pour cet utilisateur.');
+        return null;
+    }
+    return new Students(row.id, row.matricule, row.nom, row.prenom, row.age, row.classe, row.users_id);
+}
+
+
+
+export { addStudent, updateStudent, deleteStudent, rechercheStudent, listerStudents, rechercheStudentByUserId };
+
+

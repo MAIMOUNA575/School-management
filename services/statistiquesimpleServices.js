@@ -1,6 +1,9 @@
 import db from "../db/data.js";
 import Students from "../models/StudentsModel.js";
 
+
+
+
 // Identifier le meilleur étudiant
 function identifierMeilleurEtudiant() {
     const students = db.prepare(`SELECT * FROM students`).all();
@@ -36,6 +39,9 @@ function identifierMeilleurEtudiant() {
     return meilleurEtudiant;
 }
 
+
+
+
 // Calculer la moyenne générale de tous les étudiants
 function moyenneGenerale() {
     const notes = db.prepare(`SELECT note FROM grades`).all();
@@ -48,6 +54,9 @@ function moyenneGenerale() {
     const somme = notes.reduce((acc, row) => acc + row.note, 0);
     return somme / notes.length;
 }
+
+
+
 
 // Calculer la moyenne d'un étudiant 
 function moyenneEtudiant(student_id) {
@@ -73,6 +82,9 @@ function moyenneEtudiant(student_id) {
     const somme = notes.reduce((acc, row) => acc + row.note, 0);
     return somme / notes.length;
 }
+
+
+
 
 // Compter les absences d'un étudiant
 function compterAbsences(student_id) {
@@ -107,6 +119,9 @@ function compterAbsences(student_id) {
     };
 }
 
+
+
+
 // Statistiques complètes d'un étudiant
 function statistiquesEtudiant(student_id) {
     if (!student_id) {
@@ -131,4 +146,22 @@ function statistiquesEtudiant(student_id) {
     };
 }
 
-export { identifierMeilleurEtudiant, moyenneGenerale, moyenneEtudiant, compterAbsences, statistiquesEtudiant };
+
+
+// Moyenne par matiere d'un etudiant
+function moyennesParMatiere(student_id) {
+    if (!student_id) {
+        console.error('L\'identifiant de l\'étudiant est obligatoire.');
+        return [];
+    }
+
+    return db.prepare(`
+        SELECT subjects.nom AS matiere, AVG(grades.note) AS moyenne
+        FROM grades
+        JOIN subjects ON grades.subject_id = subjects.id
+        WHERE grades.student_id = ?
+        GROUP BY subjects.id
+    `).all(student_id);
+}
+
+export { identifierMeilleurEtudiant, moyenneGenerale, moyenneEtudiant, compterAbsences, statistiquesEtudiant, moyennesParMatiere };

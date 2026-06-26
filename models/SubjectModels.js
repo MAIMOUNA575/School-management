@@ -1,6 +1,3 @@
-
-
-
 class Subjects {
     constructor(nom, teachers_id){
         this.nom=nom;

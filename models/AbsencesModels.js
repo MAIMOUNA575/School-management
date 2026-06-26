@@ -1,4 +1,3 @@
-
 class Absences {
     constructor(student_id, date, status){
         this.student_id=student_id;

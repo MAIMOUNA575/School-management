@@ -1,5 +1,3 @@
-
-
 class Grades {
     constructor(student_id, subject_id, note){
         this.student_id=student_id;
