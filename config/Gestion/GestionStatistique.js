@@ -1,7 +1,6 @@
 import { question } from '../../utils/interface.js'
 import {identifierMeilleurEtudiant, moyenneGenerale, moyenneEtudiant, compterAbsences, statistiquesEtudiant, moyennesParMatiere} from '../../services/statistiquesimpleServices.js'
 
-
 const GestionStatistiquesimple = async () => {
     let active = true;
     while (active) {
@@ -15,92 +14,77 @@ const GestionStatistiquesimple = async () => {
         console.log("0. Retour au menu");
 
         const choix = await question('Choix : ');
-        
+
         switch (choix) {
             case '1': {
-                try {
-                    const meilleur = await identifierMeilleurEtudiant();
-                    console.log(`\n🏆 Meilleur étudiant : ${meilleur.nom} ${meilleur.prenom} (Moyenne : ${meilleur.moyenne})`);
-                } catch (error) {
-                    console.error("Erreur lors de la recherche du meilleur étudiant :", error.message);
+                const meilleur = identifierMeilleurEtudiant();
+                if (!meilleur) {
+                    console.log("Aucun meilleur étudiant trouvé.");
+                    break;
                 }
+                console.log(`\n🏆 Meilleur étudiant : ${meilleur.nom} ${meilleur.prenom} (Moyenne : ${meilleur.moyenne})`);
                 break;
             }
             case '2': {
-                try {
-                    const moyenneG = await moyenneGenerale();
-                    console.log(`\n📊 Moyenne générale de l'établissement : ${moyenneG}`);
-                } catch (error) {
-                    console.error("Erreur lors du calcul de la moyenne générale :", error.message);
-                }
+                const moyenneG = moyenneGenerale();
+                console.log(`\n📊 Moyenne générale de l'établissement : ${moyenneG ?? 'N/A'}`);
                 break;
             }
             case '3': {
                 const id = await question("Entrez l'ID de l'étudiant : ");
-                try {
-                    const moyenne = await moyenneEtudiant(id);
-                    console.log(`\n Moyenne de l'étudiant : ${moyenne}`);
-                } catch (error) {
-                    console.error("Erreur ou étudiant introuvable :", error.message);
-                }
+                const moyenne = moyenneEtudiant(Number(id));
+                console.log(`\nMoyenne de l'étudiant : ${moyenne ?? 'N/A'}`);
                 break;
             }
             case '4': {
                 const id = await question("Entrez l'ID de l'étudiant : ");
-                try {
-                    const absences = await compterAbsences(id);
-                    console.log(`\nNombre d'absences : ${absences}`);
-                } catch (error) {
-                    console.error("Erreur lors du décompte des absences :", error.message);
+                const absences = compterAbsences(Number(id));
+                if (!absences) {
+                    console.log("Aucune absence trouvée pour cet étudiant.");
+                    break;
                 }
+                console.log(`\nAbsences totales : ${absences.total}`);
+                console.log(`   - Justifiées : ${absences.justifiees}`);
+                console.log(`   - Non justifiées : ${absences.nonJustifiees}`);
                 break;
             }
             case '5': {
                 const id = await question("Entrez l'ID de l'étudiant : ");
-                try {
-                    const stats = statistiquesEtudiant(Number(id));
-                    if (!stats) {
-                        console.log("Aucune statistique trouvée pour cet étudiant.");
-                        break;
-                    }
-                    console.log(`\nStatistiques de ${stats.etudiant.nom} ${stats.etudiant.prenom} :`);
-                    console.log(`   - Moyenne : ${stats.moyenne}`);
-                    console.log(`   - Absences totales : ${stats.absences.total}`);
-                    console.log(`   - Absences justifiées : ${stats.absences.justifiees}`);
-                    console.log(`   - Absences non justifiées : ${stats.absences.nonJustifiees}`);
-                } catch (error) {
-                    console.error("Erreur lors de la récupération des statistiques :", error.message);
+                const stats = statistiquesEtudiant(Number(id));
+                if (!stats) {
+                    console.log("Aucune statistique trouvée pour cet étudiant.");
+                    break;
                 }
+                console.log(`\nStatistiques de ${stats.etudiant.nom} ${stats.etudiant.prenom} :`);
+                console.log(`   - Moyenne : ${stats.moyenne}`);
+                console.log(`   - Absences totales : ${stats.absences.total}`);
+                console.log(`   - Absences justifiées : ${stats.absences.justifiees}`);
+                console.log(`   - Absences non justifiées : ${stats.absences.nonJustifiees}`);
                 break;
             }
             case '6': {
                 const id = await question("Entrez l'ID de l'étudiant : ");
-                try {
-                    const matieres = moyennesParMatiere(Number(id));
-                    console.log(`\nMoyennes par matière :`);
-                    if (Array.isArray(matieres) && matieres.length > 0) {
-                        matieres.forEach(m => {
-                            console.log(`   - ${m.matiere} : ${m.moyenne}`);
-                        });
-                    } else {
-                        console.log("Aucune note trouvée pour cet étudiant.");
-                    }
-                } catch (error) {
-                    console.error("Erreur lors de la récupération des moyennes par matière :", error.message);
+                const matieres = moyennesParMatiere(Number(id));
+                console.log(`\nMoyennes par matière :`);
+                if (Array.isArray(matieres) && matieres.length > 0) {
+                    matieres.forEach(m => {
+                        console.log(`   - ${m.matiere} : ${m.moyenne}`);
+                    });
+                } else {
+                    console.log("Aucune note trouvée pour cet étudiant.");
                 }
                 break;
             }
             case '0': {
-                console.log("Retour au menu principal...");
+                console.log("Retour au menu...");
                 active = false;
                 break;
             }
             default: {
                 console.log(" ❌ Choix invalide, veuillez réessayer.");
-                break;
             }
         }
     }
-}
+};
 
 export { GestionStatistiquesimple };

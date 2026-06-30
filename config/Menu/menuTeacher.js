@@ -1,7 +1,7 @@
 import { question, close } from "../../utils/interface.js";
 import { GestionGrade } from "../Gestion/GestionGrade.js";
 import { GestionAbsences } from "../Gestion/GestionAbsences.js";
-import {GestionTeacher} from "../Gestion/GestionTeacher.js"
+import { GestionStatistiquesimple } from "../Gestion/GestionStatistique.js";
 
 
 
@@ -28,7 +28,7 @@ const afficherMenuTeacher = async () => {
                 break;
             }
             case "3": {
-                await GestionTeacher()
+                await GestionStatistiquesimple();
                 break;
             }
             case "0": {
