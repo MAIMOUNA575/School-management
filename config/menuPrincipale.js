@@ -24,7 +24,7 @@ const menuPrincipal = async () => {
             case "1": {
                 const connecte = await seConnecter();
                 if (connecte) {
-                    if (session.connectionDelUtilisateur.role === "admin")  await afficherMenuAdmin();
+                    if (session.connectionDelUtilisateur.role === "admin") await afficherMenuAdmin();
                     else if (session.connectionDelUtilisateur.role === "teacher") await afficherMenuTeacher();
                     else if (session.connectionDelUtilisateur.role === "student") await afficherMenuStudent();
                     else console.log("❌ Rôle inconnu.");
