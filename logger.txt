@@ -27,3 +27,5 @@
 2026-06-30 16:38:52 [INFO] Consultation de la liste complète des utilisateurs
 2026-06-30 16:43:00 [INFO] Consultation de la liste complète des utilisateurs
 2026-06-30 16:46:22 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-01 11:10:43 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-01 11:18:38 [WARNING] Échec ajout utilisateur : Le nom, le rôle, l'email et le mot de passe sont obligatoires.
