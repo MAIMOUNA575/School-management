@@ -38,7 +38,7 @@ const afficherMenuTeacher = async () => {
                 break;
             }
             default: {
-                console.error("❌ Choix invalide.");
+                console.error(" Choix invalide.");
             }
         }
     }

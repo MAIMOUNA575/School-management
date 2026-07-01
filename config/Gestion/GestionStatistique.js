@@ -22,12 +22,12 @@ const GestionStatistiquesimple = async () => {
                     console.log("Aucun meilleur étudiant trouvé.");
                     break;
                 }
-                console.log(`\n🏆 Meilleur étudiant : ${meilleur.nom} ${meilleur.prenom} (Moyenne : ${meilleur.moyenne})`);
+                console.log(`\n Meilleur étudiant : ${meilleur.nom} ${meilleur.prenom} (Moyenne : ${meilleur.moyenne})`);
                 break;
             }
             case '2': {
                 const moyenneG = moyenneGenerale();
-                console.log(`\n📊 Moyenne générale de l'établissement : ${moyenneG ?? 'N/A'}`);
+                console.log(`\n Moyenne générale de l'établissement : ${moyenneG ?? 'N/A'}`);
                 break;
             }
             case '3': {
@@ -81,7 +81,7 @@ const GestionStatistiquesimple = async () => {
                 break;
             }
             default: {
-                console.log(" ❌ Choix invalide, veuillez réessayer.");
+                console.log("  Choix invalide, veuillez réessayer.");
             }
         }
     }

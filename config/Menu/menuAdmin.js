@@ -58,7 +58,7 @@ const afficherMenuAdmin = async () => {
                 close();
                 break;
             default:
-                console.log("❌ Choix invalide.");
+                console.log(" Choix invalide.");
         }
     }
 };

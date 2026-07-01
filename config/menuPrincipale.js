@@ -27,7 +27,7 @@ const menuPrincipal = async () => {
                     if (session.connectionDelUtilisateur.role === "admin") await afficherMenuAdmin();
                     else if (session.connectionDelUtilisateur.role === "teacher") await afficherMenuTeacher();
                     else if (session.connectionDelUtilisateur.role === "student") await afficherMenuStudent();
-                    else console.log("❌ Rôle inconnu.");
+                    else console.log(" Rôle inconnu.");
                 }
                 break;
             }
@@ -37,7 +37,7 @@ const menuPrincipal = async () => {
                 close();
                 break;
             default:
-                console.log("❌ Choix invalide.");
+                console.log(" Choix invalide.");
         }
     }
 };

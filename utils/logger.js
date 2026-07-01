@@ -32,11 +32,11 @@ export function log(message, level = 'INFO') {
     fs.appendFileSync(fichierLog, texte);
 
     if (level.toUpperCase() === 'ERROR') {
-        console.error(`🚨 LOG : ${texte.trim()}`);
+        console.error(` LOG : ${texte.trim()}`);
     } else if (level.toUpperCase() === 'WARNING') {
-        console.warn(`⚠️ LOG : ${texte.trim()}`);
+        console.warn(` LOG : ${texte.trim()}`);
     } else {
-        console.log(`ℹ️ LOG : ${texte.trim()}`);
+        console.log(` LOG : ${texte.trim()}`);
     }
 }
 
