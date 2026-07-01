@@ -29,3 +29,11 @@
 2026-06-30 16:46:22 [INFO] Consultation de la liste complète des utilisateurs
 2026-07-01 11:10:43 [INFO] Consultation de la liste complète des utilisateurs
 2026-07-01 11:18:38 [WARNING] Échec ajout utilisateur : Le nom, le rôle, l'email et le mot de passe sont obligatoires.
+2026-07-01 11:20:14 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-01 11:20:56 [WARNING] Échec ajout utilisateur : Le nom, le rôle, l'email et le mot de passe sont obligatoires.
+2026-07-01 11:21:42 [INFO] Utilisateur ajouté avec succès - Nom: bouba, Rôle: student
+2026-07-01 11:22:16 [WARNING] Échec modification : Le rôle 'bouba@gmail.com' est invalide.
+2026-07-01 11:22:50 [WARNING] Échec modification : L'identifiant, le nom et le rôle sont obligatoires.
+2026-07-01 11:22:55 [INFO] Utilisateur ID 7 (Nom: bouba) supprimé avec succès
+2026-07-01 11:23:00 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-01 11:24:09 [INFO] Recherche effectuée pour l'utilisateur ID 1
