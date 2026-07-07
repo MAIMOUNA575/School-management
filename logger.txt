@@ -37,4 +37,22 @@
 2026-07-01 11:22:55 [INFO] Utilisateur ID 7 (Nom: bouba) supprimé avec succès
 2026-07-01 11:23:00 [INFO] Consultation de la liste complète des utilisateurs
 2026-07-01 11:24:09 [INFO] Recherche effectuée pour l'utilisateur ID 1
-2026-07-01 11:29:23 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-01 11:29:23 [INFO] Consultation de la liste complète des utilisateurs2026-07-03 10:30:16 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:30:35 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:31:24 [ERROR] Erreur base de données lors de l'ajout de l'utilisateur 'monsieur kabore' : UNIQUE constraint failed: users.email
+2026-07-03 10:31:33 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:32:46 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:38:46 [WARNING] Échec ajout utilisateur : Le rôle 'null' est invalide.
+2026-07-03 10:38:54 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:40:19 [INFO] Utilisateur ajouté avec succès - Nom: null, Rôle: admin
+2026-07-03 10:40:25 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:44:10 [ERROR] Erreur base de données lors de l'ajout de l'utilisateur 'kabore ' : UNIQUE constraint failed: users.email
+2026-07-03 10:44:18 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:51:20 [WARNING] Échec ajout utilisateur : Le nom, le rôle, l'email et le mot de passe sont obligatoires.
+2026-07-03 10:52:07 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 10:52:43 [WARNING] Échec ajout utilisateur : Un utilisateur avec le email 'maimouna@gmail.com' existe déjà.
+2026-07-03 10:52:49 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 11:00:31 [WARNING] Échec modification : L'identifiant, le nom et le rôle sont obligatoires.
+2026-07-03 11:00:57 [WARNING] Échec modification : L'identifiant, le nom et le rôle sont obligatoires.
+2026-07-03 11:01:35 [INFO] Consultation de la liste complète des utilisateurs
+2026-07-03 14:29:16 [INFO] Consultation de la liste complète des utilisateurs

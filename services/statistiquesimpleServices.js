@@ -14,8 +14,9 @@ function identifierMeilleurEtudiant() {
     }
 
     let meilleurEtudiant = null;
-    let meilleureMoyenne = -1;
 
+    
+    let meilleureMoyenne = -1;
     for (const student of students) {
         const notes = db.prepare(`SELECT note FROM grades WHERE student_id = ?`)
             .all(student.id);

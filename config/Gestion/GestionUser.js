@@ -22,7 +22,6 @@ const GestionUser = async () => {
                 const role = await question("Rôle (admin, teacher, student) : ");
                 const password = await question("Mot de passe : ");
                 addUser(nom, role, email, password);
-                console.log(`Nouvel utilisateur ajouter :${nom},  ${email}, ${role}`)
                 break;
             }
             case '2': {
